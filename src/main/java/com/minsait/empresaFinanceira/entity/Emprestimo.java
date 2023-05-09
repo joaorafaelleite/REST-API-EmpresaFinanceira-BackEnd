@@ -1,0 +1,136 @@
+package com.minsait.empresaFinanceira.entity;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.minsait.empresaFinanceira.enums.Relacionamento;
+
+@Entity
+public class Emprestimo {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long emprestimoId;
+	
+	private String cpfCliente;
+	
+    @JsonProperty("valorInicial")
+    @NotNull(message = "O campo 'ValorInicial' é obrigatório")
+    @DecimalMin(value = "0.0", inclusive = false, message = "O campo 'ValorInicial' deve ser maior que 0")
+	private BigDecimal valorInicial;
+	
+    @JsonProperty("ValorFinal")
+	private BigDecimal valorFinal;
+	
+    @JsonProperty("relacionamento")
+    @NotNull(message = "O campo 'relacionamento' é obrigatório")
+	private Relacionamento relacionamento;
+	
+    @JsonProperty("dataInicial")
+    @NotNull(message = "O campo 'dataInicial' é obrigatório")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate dataInicial;
+
+    @JsonProperty("dataFinal")
+    @NotNull(message = "O campo 'dataFinal' é obrigatório")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate dataFinal;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Cliente cliente;
+	
+	public Emprestimo() {	
+	}
+	
+	public Emprestimo(Long emprestimoId, String cpfCliente, BigDecimal valorInicial, BigDecimal valorFinal,
+			Relacionamento relacionamento, LocalDate dataInicial, LocalDate dataFinal) {
+		this.emprestimoId = emprestimoId;
+		this.cpfCliente = cpfCliente;
+		this.valorInicial = valorInicial;
+		this.valorFinal = valorFinal;
+		this.relacionamento = relacionamento;
+		this.dataInicial = dataInicial;
+		this.dataFinal = dataFinal;
+	}
+	
+	public Long getEmprestimoId() {
+		return emprestimoId;
+	}
+
+	public String getCpfCliente() {
+		return cpfCliente;
+	}
+
+	public void setCpfCliente(String cpfCliente) {
+		this.cpfCliente = cpfCliente;
+	}
+
+	public BigDecimal getValorInicial() {
+		return valorInicial;
+	}
+
+	public void setValorInicial(BigDecimal valorInicial) {
+		this.valorInicial = valorInicial;
+	}
+
+	public BigDecimal getValorFinal() {
+		return valorFinal;
+	}
+
+	public void setValorFinal(BigDecimal valorFinal) {
+		this.valorFinal = valorFinal;
+	}
+
+	public Relacionamento getRelacionamento() {
+		return relacionamento;
+	}
+
+	public void setRelacionamento(Relacionamento relacionamento) {
+		this.relacionamento = relacionamento;
+	}
+
+	public LocalDate getDataInicial() {
+		return dataInicial;
+	}
+
+	public void setDataInicial(LocalDate dataInicial) {
+		this.dataInicial = dataInicial;
+	}
+
+	public LocalDate getDataFinal() {
+		return dataFinal;
+	}
+
+	public void setDataFinal(LocalDate dataFinal) {
+		this.dataFinal = dataFinal;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+    public void atualizarValorFinal() {
+        valorFinal = relacionamento.calculaValorFinal(valorInicial, getNumeroDeEmprestimos());
+    }
+
+    private Integer getNumeroDeEmprestimos() {
+        return cliente.getListEmprestimos().size();
+    }
+	
+}
