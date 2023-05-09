@@ -33,34 +33,37 @@ Este projeto utiliza a rota local http://localhost:8080  e utiliza como forntend
   <thead>
     <tr>
       <th scope="col" class="text-center"> Método </th>
-      
+        <tbody>
+          <tr>
+            <th scope="row" class="text-center"> GET </th>
+            <td class="text-center"> GET </td>
+            <td class="text-center"> POST </td>
+            <td class="text-center"> PUT </td>
+            <td class="text-center"> DELETE </td>
+          </tr>
+        </tbody>
       <th scope="col" class="text-center"> Endpoint </th>
+        <tbody>
+          <tr>
+            <th scope="row" class="text-center"> "/api/v1/clientes"	</th>
+            <td class="text-center"> "/api/v1/clientes/{cpf}"	</td>
+            <td class="text-center"> "/api/v1/clientes"</td>
+            <td class="text-center"> "/api/v1/clientes/{cpf}"	</td>
+            <td class="text-center"> "/api/v1/clientes/{cpf}" </td>
+          </tr>
+      </tbody>
       <th scope="col" class="text-center"> Descrição </th>
+        <tbody>
+          <tr>
+            <th scope="row" class="text-center"> Retorna todos os clientes cadastrados </th>
+            <td class="text-center"> Retorna o cliente com o cpf informado </td>
+            <td class="text-center"> Cadastra um novo cliente </td>
+            <td class="text-center"> Atualiza o cliente com o cpf informado </td>
+            <td class="text-center"> Deleta o cliente com o cpf informado </td>
+          </tr>
+        </tbody>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      <th scope="row" class="text-center"> GET </th>
-      <td class="text-center"> GET </td>
-      <td class="text-center"> POST </td>
-      <td class="text-center"> PUT </td>
-      <td class="text-center"> DELETE </td>
-    </tr>
-    <tr>
-       <th scope="row" class="text-center"> "/api/v1/clientes"	</th>
-      <td class="text-center"> "/api/v1/clientes/{cpf}"	</td>
-      <td class="text-center"> "/api/v1/clientes"</td>
-      <td class="text-center"> "/api/v1/clientes/{cpf}"	</td>
-      <td class="text-center"> "/api/v1/clientes/{cpf}" </td>
-    </tr>
-    <tr>
-      <th scope="row" class="text-center"> Retorna todos os clientes cadastrados </th>
-      <td class="text-center"> Retorna o cliente com o cpf informado </td>
-      <td class="text-center"> Cadastra um novo cliente </td>
-      <td class="text-center"> Atualiza o cliente com o cpf informado </td>
-      <td class="text-center"> Deleta o cliente com o cpf informado </td>
-    </tr>
-  </tbody>
   
 Ao atualizar um cliente (PUT), os campos que não forem informados serão mantidos.
 
